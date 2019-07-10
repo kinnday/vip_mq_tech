@@ -24,15 +24,15 @@ public class JmsProducer {
     private static final int SENDNUM = 3;
 
     public static void main(String[] args) {
-        /* 连接工厂*/
+        /* 1.连接工厂*/
         ConnectionFactory connectionFactory;
-        /* 连接*/
+        /* 2.连接*/
         Connection connection = null;
-        /* 会话*/
+        /* 3.会话*/
         Session session;
-        /* 消息的目的地*/
+        /* 4.消息的目的地-broke*/
         Destination destination;
-        /* 消息的生产者*/
+        /* 5.消息的生产者*/
         MessageProducer messageProducer;
 
         /* 实例化连接工厂*/
@@ -43,12 +43,12 @@ public class JmsProducer {
             connection = connectionFactory.createConnection();
             /* 启动连接*/
             connection.start();
-            /* 创建session
-            * 第一个参数表示是否使用事务，第二次参数表示是否自动确认*/
+            /* 创建session; 需要两个个参数
+            * 第一个参数表示是否使用事务，第二次参数表示是否 自动确认*/
             session = connection.createSession(false,
                     Session.AUTO_ACKNOWLEDGE);
-            /* 创建一个名为HelloWorld消息队列*/
-            //destination = session.createTopic("HelloActiveMq");
+            /* 6 创建一个名为HelloWorld消息队列*/
+            destination = session.createTopic("HelloActiveMq");
             destination = session.createQueue("HelloActiveMqQueue");
             /* 创建消息生产者*/
             messageProducer = session.createProducer(destination);
@@ -56,7 +56,7 @@ public class JmsProducer {
             for(int i=0;i<SENDNUM;i++){
                 String msg = "发送消息"+i+" "+System.currentTimeMillis();
                 TextMessage textMessage = session.createTextMessage(msg);
-                System.out.println("标准用法:"+msg);
+                System.out.println("ActiveMq-标准用法:"+msg);
                 messageProducer.send(textMessage);
             }
         } catch (Exception e) {

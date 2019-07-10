@@ -22,15 +22,15 @@ public class JmsConsumer {
             = ActiveMQConnection.DEFAULT_BROKER_URL;
 
     public static void main(String[] args) {
-        /* 连接工厂*/
+        /* 1 连接工厂*/
         ConnectionFactory connectionFactory;
-        /* 连接*/
+        /* 2 连接*/
         Connection connection = null;
-        /* 会话*/
+        /* 3 会话*/
         Session session;
-        /* 消息的目的地*/
+        /* 4 消息的目的地*/
         Destination destination;
-        /* 消息的消费者*/
+        /* 5 消息的消费者*/
         MessageConsumer messageConsumer;
 
         /* 实例化连接工厂*/
@@ -45,10 +45,11 @@ public class JmsConsumer {
             /* 创建session*/
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             /* 创建一个名为HelloWorld消息队列*/
-            //destination = session.createTopic("HelloActiveMq");
-            destination = session.createQueue("HelloActiveMqQueue");
-            /* 创建消息消费者*/
+            destination = session.createTopic("HelloActiveMq");
+//            destination = session.createQueue("HelloActiveMqQueue");
+            /* 6 创建消息消费者*/
             messageConsumer = session.createConsumer(destination);
+//          消息接收有两种方式： 阻塞方式； 异步方式
             Message message;
             while((message = messageConsumer.receive())!=null){
                 System.out.println(((TextMessage)message).getText());

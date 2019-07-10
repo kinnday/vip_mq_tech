@@ -51,6 +51,7 @@ public class JmsConsumerAsyn {
 
             /* 创建消息消费者*/
             messageConsumer = session.createConsumer(destination);
+            //  消息接收有两种方式： 阻塞方式； 异步监听方式
             /* 设置消费者监听器，监听消息*/
             messageConsumer.setMessageListener(new MessageListener() {
                 public void onMessage(Message message) {

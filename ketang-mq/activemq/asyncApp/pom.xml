@@ -120,7 +120,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!--ActiveMq -->
+        <!--ActiveMq -只需要这个jar就行 -->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
