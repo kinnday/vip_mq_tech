@@ -17,12 +17,12 @@
               expression="org.springframework.stereotype.Controller"/>
      </context:component-scan>
 
-	<!-- ActiveMQ 连接工厂 -->
+	<!-- 1-ActiveMQ 连接工厂 -->
     <amq:connectionFactory id="amqConnectionFactory"
              brokerURL="tcp://127.0.0.1:61616" userName="" password="" />
 
 	<!-- Spring Caching连接工厂 -->
-	<!-- Spring用于管理真正的ConnectionFactory的ConnectionFactory -->
+	<!-- 2-Spring用于管理真正的ConnectionFactory的ConnectionFactory -->
     <bean id="connectionFactory"
           class="org.springframework.jms.connection.CachingConnectionFactory">
         <property name="targetConnectionFactory" ref="amqConnectionFactory"></property>
@@ -31,17 +31,17 @@
 
 
 	<!-- Spring JmsTemplate 的消息生产者 start-->
-	<!-- 定义JmsTemplate的Queue类型 -->
+	<!-- 3-定义JmsTemplate的Queue类型 -->
     <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
         <constructor-arg ref="connectionFactory"></constructor-arg>
         <!-- 队列模式-->
         <property name="pubSubDomain" value="false"></property>
     </bean>
 
-	<!-- 定义JmsTemplate的Topic类型 -->
+	<!-- 3.2-定义JmsTemplate的Topic类型 -->
     <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
         <constructor-arg ref="connectionFactory"></constructor-arg>
-        <!-- 发布订阅模式-->
+        <!-- 发布订阅模式； false: 点对点模式-->
         <property name="pubSubDomain" value="true"></property>
     </bean>
 

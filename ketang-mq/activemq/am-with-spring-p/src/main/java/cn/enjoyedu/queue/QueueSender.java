@@ -16,6 +16,7 @@ import javax.jms.*;
 @Component("queueSender")
 public class QueueSender {
 
+	//	注入 queue模实例
 	@Autowired
 	@Qualifier("jmsQueueTemplate")
 	private JmsTemplate jmsTemplate;

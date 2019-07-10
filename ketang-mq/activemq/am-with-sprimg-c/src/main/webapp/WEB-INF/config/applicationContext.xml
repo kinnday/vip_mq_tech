@@ -13,7 +13,7 @@
         http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
         http://activemq.apache.org/schema/core
         http://activemq.apache.org/schema/core/activemq-core-5.8.0.xsd">
-     
+     <!-- 消费端-多个配置activemq-core -->
      <!-- 配置扫描路径 -->
      <context:component-scan base-package="cn.enjoyedu">
      	<context:exclude-filter type="annotation"
@@ -35,14 +35,14 @@
 
     <!-- 消息消费者 start-->
 
-    <!-- 定义Topic监听器 -->
+    <!-- 定义Topic监听器 与生产者的差别只有这里 -->
     <jms:listener-container destination-type="topic" container-type="default"
                             connection-factory="connectionFactory" acknowledge="auto">
         <jms:listener destination="test.topic" ref="topicReceiver1"></jms:listener>
         <jms:listener destination="test.topic" ref="topicReceiver2"></jms:listener>
     </jms:listener-container>
 
-    <!-- 定义Queue监听器 -->
+    <!-- 定义Queue监听器 与生产者的差别只有这里-->
     <jms:listener-container destination-type="queue" container-type="default"
                             connection-factory="connectionFactory" acknowledge="auto">
         <jms:listener destination="test.queue" ref="queueReceiver1"></jms:listener>

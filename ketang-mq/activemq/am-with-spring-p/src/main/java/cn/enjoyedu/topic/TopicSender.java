@@ -19,6 +19,7 @@ import javax.jms.TextMessage;
 @Component("topicSender")
 public class TopicSender {
 
+	//	注入 topic模实例
 	@Autowired
 	@Qualifier("jmsTopicTemplate")
 	private JmsTemplate jmsTemplate;
