@@ -31,11 +31,13 @@ public class KafkaFutureProducer {
 
                 record =  new ProducerRecord<String,String>(
                         BusiConst.HELLO_TOPIC,"teacher10","james");
+//              future为线程返回的结果
+//              方法1：同步非阻塞方式
                 Future<RecordMetadata> future = producer.send(record);
-                System.out.println("do other sth");
+                System.out.println("fxc--do other sth");
                 RecordMetadata recordMetadata = future.get();
                 if(null!=recordMetadata){
-                    System.out.println("offset:"+recordMetadata.offset()+"-"
+                    System.out.println("fxc-offset:"+recordMetadata.offset()+"-"
                             +"partition:"+recordMetadata.partition());
                 }
 

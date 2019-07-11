@@ -19,17 +19,24 @@ public class HelloKafkaConsumer {
 
     public static void main(String[] args) {
         Properties properties = new Properties();
-        properties.put("bootstrap.servers","127.0.0.1:9092");
+        properties.put("bootstrap.servers","59.110.139.17:9092");
+//        properties.put("bootstrap.servers","127.0.0.1:9092");
+//      键值的反序列化，必须实现kafka的Deserializer 接口
         properties.put("key.deserializer",
                 StringDeserializer.class);
         properties.put("value.deserializer",
                 StringDeserializer.class);
+//      配置消费者-群组
         properties.put(ConsumerConfig.GROUP_ID_CONFIG,"test");
+//      创建消费者实例
         KafkaConsumer<String,String> consumer
                 = new KafkaConsumer<String, String>(properties);
         try {
+//          消费者订阅主题
             consumer.subscribe(Collections.singletonList(BusiConst.HELLO_TOPIC));
             while(true){
+//              kafka 只有拉取模式，没有主动推送模式！！！
+//              500毫秒拉取一次
                 ConsumerRecords<String, String> records = consumer.poll(500);
                 for(ConsumerRecord<String, String> record:records){
                     System.out.println(String.format("topic:%s,分区：%d,偏移量：%d," +

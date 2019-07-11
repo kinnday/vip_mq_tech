@@ -27,6 +27,7 @@ public class KafkaAsynProducer {
         try {
             record = new ProducerRecord<String,String>(
                     BusiConst.HELLO_TOPIC,"teacher14","deer");
+//          2. 异步回调方式
             producer.send(record, new Callback() {
                 public void onCompletion(RecordMetadata metadata,
                                          Exception exception) {
