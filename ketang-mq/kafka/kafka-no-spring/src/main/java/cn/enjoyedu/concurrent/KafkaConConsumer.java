@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,8 +28,12 @@ public class KafkaConConsumer {
 
         private KafkaConsumer<String,String> consumer;
 
-        //TODO
+        //fxc
+        public ConsumerWorker(KafkaConsumer<String, String> consumer) {
+            this.consumer = consumer;
+        }
 
+        @Override
         public void run() {
             final String id = Thread.currentThread().getId()
                     +"-"+System.identityHashCode(consumer);
@@ -57,9 +62,15 @@ public class KafkaConConsumer {
                 = KafkaConst.consumerConfigMap("concurrent",
                 StringDeserializer.class,
                 StringDeserializer.class);
+
         for(int i = 0; i<BusiConst.CONCURRENT_PARTITIONS_COUNT; i++){
             //TODO
+            KafkaConsumer<String,String> consumer
+                    = new KafkaConsumer<String, String>(config);
+            consumer.subscribe(Collections.singletonList(BusiConst.CONCURRENT_USER_INFO_TOPIC) );
+            executorService.submit(new ConsumerWorker(consumer));
         }
+//        executorService.shutdown();
     }
 
 
