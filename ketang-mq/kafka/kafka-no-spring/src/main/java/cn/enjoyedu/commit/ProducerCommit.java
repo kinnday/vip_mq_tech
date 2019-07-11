@@ -19,7 +19,7 @@ public class ProducerCommit {
         /*发送配置的实例*/
         Properties properties = new Properties();
         /*broker的地址清单*/
-        properties.put("bootstrap.servers","127.0.0.1:9092");
+        properties.put("bootstrap.servers","59.110.139.17:9092");
         /*key的序列化器*/
         properties.put("key.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
