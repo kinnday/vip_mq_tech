@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
  */
 public class KafkaConConsumer {
 
+//  首先定义一个线程池
     private static ExecutorService executorService
             = Executors.newFixedThreadPool(
                     BusiConst.CONCURRENT_PARTITIONS_COUNT);
