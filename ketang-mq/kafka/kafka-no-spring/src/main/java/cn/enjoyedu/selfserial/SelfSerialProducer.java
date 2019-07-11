@@ -18,7 +18,7 @@ public class SelfSerialProducer {
 
     public static void main(String[] args) {
 
-        /*消息生产者*/
+        /*消息生产者-序列化对象*/
         producer = new KafkaProducer<String, DemoUser>(KafkaConst.producerConfig(
                 StringSerializer.class,SelfSerializer.class
         ));
@@ -28,7 +28,7 @@ public class SelfSerialProducer {
             try {
                 record =  new ProducerRecord<String,DemoUser>(
                         BusiConst.SELF_SERIAL_TOPIC,"user01",
-                        new DemoUser(1,"mark"));
+                        new DemoUser(1,"mark11144"));
                producer.send(record);
                System.out.println("sent ");
             } catch (Exception e) {

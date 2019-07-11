@@ -12,9 +12,11 @@ import java.util.Map;
  * 往期课程咨询芊芊老师  QQ：2130753077 VIP课程咨询 依娜老师  QQ：2133576719
  * 类说明：自定义分区器，以value值进行分区
  */
+// 自定义分区器- 必须继承 Partitioner
 public class SelfPartitioner implements Partitioner {
     public int partition(String topic, Object key, byte[] keyBytes,
                          Object value, byte[] valueBytes, Cluster cluster) {
+//      获取某个主体下所有分区； 然后根据value的hashCode 进行分区映射
         List<PartitionInfo> partitionInfos = cluster.partitionsForTopic(topic);
         int num = partitionInfos.size();
         int parId = ((String)value).hashCode()%num;

@@ -21,7 +21,7 @@ public class SelfSerialConsumer {
 
     public static void main(String[] args) {
 
-        /*消息消费者*/
+        /*消息消费者-序列化对象*/
         consumer = new KafkaConsumer<String, DemoUser>(
                 KafkaConst.consumerConfig("selfserial",
                 StringDeserializer.class,
