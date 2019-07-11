@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 public class KafkaConProducer {
 
     //发送消息的个数
-    private static final int MSG_SIZE = 20;
+    private static final int MSG_SIZE = 1000;
     //负责发送消息的线程池
     private static ExecutorService executorService
             = Executors.newFixedThreadPool(

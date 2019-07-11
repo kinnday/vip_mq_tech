@@ -16,7 +16,7 @@ public class HelloKafkaProducer {
     public static void main(String[] args) {
 
         Properties properties = new Properties();
-        properties.put("bootstrap.servers","59.110.139.17:9092");
+        properties.put("bootstrap.servers","127.0.0.1:9092");
         properties.put("key.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
         properties.put("value.serializer",

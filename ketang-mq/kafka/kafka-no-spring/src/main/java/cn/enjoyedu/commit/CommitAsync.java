@@ -13,7 +13,7 @@ import java.util.Properties;
 /**
  * @author Mark老师   享学课堂 https://enjoy.ke.qq.com
  * 往期课程咨询芊芊老师  QQ：2130753077 VIP课程咨询 依娜老师  QQ：2133576719
- * 类说明：异步手动提交当偏移量，生产者使用KafkaConProducer
+ * 类说明：异步手动提交当偏移量，生产者使用ProducerCommit
  */
 public class CommitAsync {
 
@@ -41,9 +41,19 @@ public class CommitAsync {
                             record.key(),record.value()));
                     //do our work
                 }
-                //TODO
+                consumer.commitAsync();
                 /*允许执行回调*/
-                //TODO
+//                consumer.commitAsync(new OffsetCommitCallback() {
+//                    public void onComplete(
+//                            Map<TopicPartition, OffsetAndMetadata> offsets,
+//                            Exception exception) {
+//                        if(exception!=null){
+//                            System.out.print("Commmit failed for offsets ");
+//                            System.out.println(offsets);
+//                            exception.printStackTrace();
+//                        }
+//                    }
+//                });
 
             }
         } finally {

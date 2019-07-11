@@ -33,7 +33,6 @@ public class SelfSerializer implements Serializer<DemoUser> {
                 nameSize = 0;
             }
             /*id的长度4个字节，字符串的长度描述4个字节，
-            long : 8
             字符串本身的长度nameSize个字节*/
             ByteBuffer buffer = ByteBuffer.allocate(4+4+nameSize);
             buffer.putInt(data.getId());//4

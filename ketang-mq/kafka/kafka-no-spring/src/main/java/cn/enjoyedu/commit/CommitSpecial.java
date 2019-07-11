@@ -5,9 +5,13 @@ import cn.enjoyedu.config.KafkaConst;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.OffsetAndMetadata;
+import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -19,7 +23,7 @@ public class CommitSpecial {
     public static void main(String[] args) {
         /*消息消费者*/
         Properties properties = KafkaConst.consumerConfig(
-                "CommitSync",
+                "CommitSpecial",
                 StringDeserializer.class,
                 StringDeserializer.class);
         /*取消自动提交*/
@@ -27,7 +31,8 @@ public class CommitSpecial {
 
         KafkaConsumer<String,String> consumer
                 = new KafkaConsumer<String, String>(properties);
-        //TODO
+        Map<TopicPartition, OffsetAndMetadata> currOffsets
+                = new HashMap<TopicPartition, OffsetAndMetadata>();
         int count = 0;
         try {
             consumer.subscribe(Collections.singletonList(
@@ -40,7 +45,11 @@ public class CommitSpecial {
                             "主题：%s，分区：%d，偏移量：%d，key：%s，value：%s",
                             record.topic(),record.partition(),record.offset(),
                             record.key(),record.value()));
-                    //TODO
+                    currOffsets.put(new TopicPartition(record.topic(),record.partition()),
+                            new OffsetAndMetadata(record.offset()+1,"no meta"));
+                    if(count%11==0){
+                        consumer.commitAsync(currOffsets,null);
+                    }
                     count++;
                 }
             }

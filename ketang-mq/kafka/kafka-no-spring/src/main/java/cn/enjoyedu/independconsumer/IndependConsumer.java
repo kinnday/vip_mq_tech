@@ -33,7 +33,17 @@ public class IndependConsumer {
                 StringDeserializer.class.getName());
 
         /*独立消息消费者*/
-        //TODO
+        consumer= new KafkaConsumer<String, String>(properties);
+        List<TopicPartition> topicPartitionList = new ArrayList<TopicPartition>();
+        List<PartitionInfo> partitionInfos
+                = consumer.partitionsFor(SINGLE_CONSUMER_TOPIC);
+        if(null!=partitionInfos){
+            for(PartitionInfo partitionInfo:partitionInfos){
+                topicPartitionList.add(new TopicPartition(partitionInfo.topic(),
+                        partitionInfo.partition()));
+            }
+        }
+        consumer.assign(topicPartitionList);
         try {
 
             while(true){

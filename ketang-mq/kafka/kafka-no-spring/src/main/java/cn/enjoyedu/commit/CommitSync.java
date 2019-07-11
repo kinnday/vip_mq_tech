@@ -2,6 +2,7 @@ package cn.enjoyedu.commit;
 
 import cn.enjoyedu.config.BusiConst;
 import cn.enjoyedu.config.KafkaConst;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -13,7 +14,7 @@ import java.util.Properties;
 /**
  * @author Mark老师   享学课堂 https://enjoy.ke.qq.com
  * 往期课程咨询芊芊老师  QQ：2130753077 VIP课程咨询 依娜老师  QQ：2133576719
- * 类说明：手动提交当偏移量，生产者使用KafkaConProducer
+ * 类说明：手动提交当偏移量，生产者使用ProducerCommit
  */
 public class CommitSync {
 
@@ -23,7 +24,7 @@ public class CommitSync {
                 StringDeserializer.class,
                 StringDeserializer.class);
         /*取消自动提交*/
-        //TODO
+        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,false);
 
         KafkaConsumer<String,String> consumer
                 = new KafkaConsumer<String, String>(properties);
@@ -39,8 +40,13 @@ public class CommitSync {
                             record.topic(),record.partition(),record.offset(),
                             record.key(),record.value()));
                     //do our work
+
                 }
-                //TODO
+                //开始事务
+                //读业务写数据库-
+                //偏移量写入数据库
+                //提交
+                consumer.commitSync();
             }
         } finally {
             consumer.close();

@@ -31,7 +31,6 @@ public class KafkaConConsumer {
         public ConsumerWorker(Map<String, Object> config, String topic) {
             Properties properties = new Properties();
             properties.putAll(config);
-//          kafka消费者不是线程安全的！！！ 在线程中创建， 这里在任务中创建也没问题
             this.consumer = new KafkaConsumer<String, String>(properties);
             consumer.subscribe(Collections.singletonList(topic));
         }
@@ -60,10 +59,8 @@ public class KafkaConConsumer {
 
     public static void main(String[] args) {
         /*消费配置的实例*/
-//      总是获取不到消息..........
-//      auto.offset.reset: 默认 lastst: 消费者启动以后最新的（这是个坑）
         Map<String, Object> config
-                = KafkaConst.consumerConfigMap("concurrent-fxc2",
+                = KafkaConst.consumerConfigMap("concurrent",
                 StringDeserializer.class,
                 StringDeserializer.class);
         for(int i = 0; i<BusiConst.CONCURRENT_PARTITIONS_COUNT; i++){

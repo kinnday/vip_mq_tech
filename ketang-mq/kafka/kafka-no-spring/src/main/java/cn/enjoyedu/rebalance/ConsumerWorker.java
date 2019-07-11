@@ -1,10 +1,12 @@
 package cn.enjoyedu.rebalance;
 
+import cn.enjoyedu.config.BusiConst;
 import cn.enjoyedu.config.KafkaConst;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -35,7 +37,8 @@ public class ConsumerWorker  implements Runnable{
                 = new KafkaConsumer<String, String>(properties);
         this.currOffsets
                 = new HashMap<TopicPartition, OffsetAndMetadata>();
-        //TODO
+        consumer.subscribe(Collections.singletonList(BusiConst.REBALANCE_TOPIC),
+                new HandlerRebalance(currOffsets,consumer));
     }
 
     public void run() {
@@ -47,16 +50,29 @@ public class ConsumerWorker  implements Runnable{
             while(true){
                 ConsumerRecords<String, String> records
                         = consumer.poll(500);
+                //业务处理
+                //开始事务
                 for(ConsumerRecord<String, String> record:records){
                     System.out.println(id+"|"+String.format(
                             "处理主题：%s，分区：%d，偏移量：%d，" +
                                     "key：%s，value：%s",
                             record.topic(),record.partition(),
                             record.offset(),record.key(),record.value()));
-                    //TODO
+                    topicPartition = new TopicPartition(record.topic(),
+                            record.partition());
+                    offset = record.offset()+1;
+                    currOffsets.put(topicPartition,new OffsetAndMetadata(offset,
+                            "no"));
                     count++;
+                    //执行业务sql
                 }
-                //TODO
+                if(currOffsets.size()>0){
+                    for(TopicPartition topicPartitionkey:currOffsets.keySet()){
+                        HandlerRebalance.partitionOffsetMap.put(topicPartitionkey,
+                                currOffsets.get(topicPartitionkey).offset());
+                    }
+                    //提交事务,同时将业务和偏移量入库
+                }
                 if(isStop&&count>=5){
                     System.out.println(id+"-将关闭，当前偏移量为："+currOffsets);
                     consumer.commitSync();

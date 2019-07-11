@@ -32,7 +32,6 @@ public class GroupBConsumer2 {
         try {
             //test subscribe("test.*")
             consumer.subscribe(Collections.singletonList(BusiConst.CONSUMER_GROUP_TOPIC));
-//          先拉取群组信息，触发分区再均衡；
             consumer.poll(0);
             while(true){
                 ConsumerRecords<String, String> records
