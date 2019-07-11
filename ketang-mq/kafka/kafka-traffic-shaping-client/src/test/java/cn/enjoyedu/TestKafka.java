@@ -14,6 +14,7 @@ import java.util.concurrent.CountDownLatch;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestKafka {
 
+//	通过消息队列，5000个请求，2个线程，全部成功执行了！！
 	// 并发量
 	private static final int USER_NUM = 5000;
 	// 倒计时器，用于模拟高并发

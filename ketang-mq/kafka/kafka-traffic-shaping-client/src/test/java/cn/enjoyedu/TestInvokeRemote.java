@@ -20,6 +20,12 @@ public class TestInvokeRemote {
 
     private static CountDownLatch cdl = new CountDownLatch(num);
 
+
+//    没有 削锋填谷之前，很多失败的
+//    select ticket 无法执行，超过数据池连接数限制！
+//    select ticket 无法执行，超过数据池连接数限制！
+//    select ticket 被正确处理
+//    select ticket 无法执行，超过数据池连接数限制！
     @Test
     public void testInvokeRemote() throws InterruptedException {
         for(int i = 0; i <num; i++){
