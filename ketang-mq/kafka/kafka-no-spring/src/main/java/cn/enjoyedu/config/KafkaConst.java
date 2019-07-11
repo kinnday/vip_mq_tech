@@ -51,6 +51,8 @@ public class KafkaConst {
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,keyDeserializeClazz);
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,valueDeserializeClazz);
         properties.put(ConsumerConfig.GROUP_ID_CONFIG,groupId);
+//      fxc-add
+        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,"earliest");
         return properties;
     }
 
