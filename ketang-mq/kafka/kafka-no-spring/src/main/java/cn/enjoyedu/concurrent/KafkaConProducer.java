@@ -22,11 +22,10 @@ public class KafkaConProducer {
 
     //发送消息的个数
     private static final int MSG_SIZE = 1000;
-    //负责发送消息的线程池（根据cpu核数设置线程池大小）
+    //负责发送消息的线程池
     private static ExecutorService executorService
             = Executors.newFixedThreadPool(
             Runtime.getRuntime().availableProcessors());
-//  1000个线程创建好之后一起发送
     private static CountDownLatch countDownLatch
             = new CountDownLatch(MSG_SIZE);
 
@@ -53,7 +52,6 @@ public class KafkaConProducer {
             final String id = Thread.currentThread().getId()
                     +"-"+System.identityHashCode(producer);
             try {
-//              回调方式输出-发送结果
                 producer.send(record, new Callback() {
                     public void onCompletion(RecordMetadata metadata,
                                              Exception exception) {
@@ -68,7 +66,6 @@ public class KafkaConProducer {
                     }
                 });
                 System.out.println(id+":数据["+record+"]已发送。");
-//              发令枪-减一
                 countDownLatch.countDown();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,7 +74,6 @@ public class KafkaConProducer {
     }
 
     public static void main(String[] args) {
-//      只创建一个生产者（验证是线程安全的）
         KafkaProducer<String,String> producer
                 = new KafkaProducer<String, String>(
                 KafkaConst.producerConfig(StringSerializer.class,
@@ -85,7 +81,6 @@ public class KafkaConProducer {
         try {
             for(int i=0;i<MSG_SIZE;i++){
                 DemoUser demoUser = makeUser(i);
-//              1000个任务，提交到线程池
                 ProducerRecord<String,String> record
                         = new ProducerRecord<String,String>(
                         BusiConst.CONCURRENT_USER_INFO_TOPIC,null,

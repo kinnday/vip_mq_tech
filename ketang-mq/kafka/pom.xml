@@ -16,7 +16,6 @@
     </modules>
     <dependencies>
 
-        <!-- kafka 需要引入的jar-->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>

@@ -3,6 +3,7 @@ package cn.enjoyedu.selfpartition;
 import cn.enjoyedu.config.BusiConst;
 import cn.enjoyedu.config.KafkaConst;
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -24,7 +25,9 @@ public class SelfPartitionProducer {
         Properties properties
                 = KafkaConst.producerConfig(StringSerializer.class,
                 StringSerializer.class);
-        //TODO
+        /*使用自定义的分区器*/
+        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG,
+                "cn.enjoyedu.selfpartition.SelfPartitioner");
         producer = new KafkaProducer<String, String>(properties);
         try {
             /*待发送的消息实例*/

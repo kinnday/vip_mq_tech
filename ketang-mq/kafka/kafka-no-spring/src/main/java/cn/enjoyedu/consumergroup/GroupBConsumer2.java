@@ -30,6 +30,7 @@ public class GroupBConsumer2 {
         consumer = new KafkaConsumer<String, String>(properties);
 
         try {
+            //test subscribe("test.*")
             consumer.subscribe(Collections.singletonList(BusiConst.CONSUMER_GROUP_TOPIC));
             consumer.poll(0);
             while(true){

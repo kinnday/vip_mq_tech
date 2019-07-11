@@ -32,7 +32,7 @@ public class GroupCConsumer {
             consumer.poll(0);
             while(true){
                 ConsumerRecords<String, String> records
-                        = consumer.poll(500);
+                        = consumer.poll(500);//5秒  50000
                 for(ConsumerRecord<String, String> record:records){
                     System.out.println(String.format(
                             "主题：%s，分区：%d，偏移量：%d，key：%s，value：%s",

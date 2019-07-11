@@ -1,10 +1,12 @@
 package cn.enjoyedu.selfserial;
 
 import cn.enjoyedu.config.BusiConst;
+import cn.enjoyedu.config.KafkaConst;
 import cn.enjoyedu.vo.DemoUser;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.util.Collections;
 
@@ -20,7 +22,10 @@ public class SelfSerialConsumer {
     public static void main(String[] args) {
 
         /*消息消费者*/
-        //TODO
+        consumer = new KafkaConsumer<String, DemoUser>(
+                KafkaConst.consumerConfig("selfserial",
+                StringDeserializer.class,
+                SelfDeserializer.class));
         try {
             consumer.subscribe(Collections.singletonList(BusiConst.SELF_SERIAL_TOPIC));
             while(true){
