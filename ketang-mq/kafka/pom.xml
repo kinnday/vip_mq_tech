@@ -13,6 +13,11 @@
     <packaging>pom</packaging>
     <modules>
         <module>kafka-no-spring</module>
+        <module>kafka-with-spring</module>
+        <module>kafka-with-springboot</module>
+        <module>kafka-traffic-shaping-client</module>
+        <module>kafka-traffic-shaping</module>
+        <module>kafka-stream</module>
     </modules>
     <dependencies>
 
