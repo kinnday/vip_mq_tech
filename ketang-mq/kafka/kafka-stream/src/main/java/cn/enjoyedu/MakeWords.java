@@ -19,7 +19,7 @@ public class MakeWords {
         /*发送配置的实例*/
         Properties properties = new Properties();
         /*broker的地址清单*/
-        properties.put("bootstrap.servers","127.0.0.1:9092");
+        properties.put("bootstrap.servers","57.110.139.17:9092");
         /*key的序列化器*/
         properties.put("key.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
@@ -47,7 +47,7 @@ public class MakeWords {
                     /*发送消息--发送后不管*/
                     producer.send(record);
                     System.out.println("发送的文本为："+sb.toString());
-                    Thread.sleep(2);
+                    Thread.sleep(5);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

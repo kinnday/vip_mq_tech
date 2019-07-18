@@ -26,7 +26,9 @@ public class HelloKafkaProducer {
         try {
             ProducerRecord<String,String> record;
             try {
-                record = new ProducerRecord<String,String>(BusiConst.HELLO_TOPIC,
+//                record = new ProducerRecord<String,String>(BusiConst.HELLO_TOPIC,
+//                        "teacher02","lison");
+                record = new ProducerRecord<String,String>("testAck",
                         "teacher02","lison");
                 producer.send(record);
                 System.out.println("message is sent.");

@@ -12,6 +12,7 @@
     <artifactId>kafka-stream</artifactId>
 
     <dependencies>
+        <!-- kafka- 流数据-->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-streams</artifactId>

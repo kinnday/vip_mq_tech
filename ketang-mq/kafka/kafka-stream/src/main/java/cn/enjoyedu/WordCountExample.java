@@ -25,7 +25,7 @@ public class WordCountExample {
         /*每个stream应用都必须有唯一的id*/
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount");
         /*kafka的地址*/
-        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "57.110.139.17:9092");
         /*消息的序列化机制*/
         props.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG,
                 Serdes.String().getClass().getName());
