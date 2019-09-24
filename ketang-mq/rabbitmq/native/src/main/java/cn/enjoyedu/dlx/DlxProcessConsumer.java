@@ -17,7 +17,10 @@ public class DlxProcessConsumer {
     public static void main(String[] argv)
             throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
         // 打开连接和创建频道，与发送端一样
         Connection connection = factory.newConnection();

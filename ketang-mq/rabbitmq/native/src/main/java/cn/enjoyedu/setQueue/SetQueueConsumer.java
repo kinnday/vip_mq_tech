@@ -18,7 +18,10 @@ public class SetQueueConsumer {
     public static void main(String[] argv)
             throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
         // 打开连接和创建频道，与发送端一样
         Connection connection = factory.newConnection();
@@ -29,7 +32,15 @@ public class SetQueueConsumer {
         /*声明一个队列*/
         String queueName = "setQueue";
         Map<String, Object> arguments = new HashMap<String, Object>();
+        arguments.put("x-expires",5*1000);
+        arguments.put("x-max-length",5000);
         /*加入队列的各种参数*/
+//        临时队列：：：
+//        1.自动删除队列： autoDelete: true 当消费者断开，队列整个删除
+//        2.单消费者队列： exclusive: true;
+//        3.自动过期的队列； arguments.put("x-expires",7200);
+//         a.队列没有get操作； b.没有消费者连接上去；
+//        永久队列： durable:true; 最保险单性能最低
         channel.queueDeclare(queueName,false,false,
                 false,arguments);
 

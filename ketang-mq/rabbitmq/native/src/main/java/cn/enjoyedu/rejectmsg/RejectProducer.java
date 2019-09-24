@@ -22,7 +22,10 @@ public class RejectProducer {
          */
         ConnectionFactory factory = new ConnectionFactory();
         // 设置MabbitMQ所在主机ip或者主机名
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
         // 创建一个连接
         Connection connection = factory.newConnection();

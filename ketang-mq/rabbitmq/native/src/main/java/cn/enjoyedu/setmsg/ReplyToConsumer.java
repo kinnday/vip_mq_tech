@@ -15,7 +15,10 @@ public class ReplyToConsumer {
     public static void main(String[] argv)
             throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
         // 打开连接和创建频道，与发送端一样
         Connection connection = factory.newConnection();
@@ -47,10 +50,11 @@ public class ReplyToConsumer {
                         +"]"+message);
                 AMQP.BasicProperties respProp
                         = new AMQP.BasicProperties.Builder()
+//                        核心参数： replyto
                         .replyTo(properties.getReplyTo())
                         .correlationId(properties.getMessageId())
                         .build();
-
+//              消费完成后-进行回复！！！
                 channel.basicPublish("", respProp.getReplyTo() ,
                         respProp ,
                         ("Hi,"+message).getBytes("UTF-8"));

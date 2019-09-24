@@ -82,7 +82,7 @@
             <version>1.9.13</version>
         </dependency>
 
-        <!-- RabbitMQ -->
+        <!-- RabbitMQ -b版本要对应！-->
         <dependency>
             <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit</artifactId>

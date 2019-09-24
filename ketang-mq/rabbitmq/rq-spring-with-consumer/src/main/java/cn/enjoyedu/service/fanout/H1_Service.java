@@ -13,6 +13,7 @@ import org.springframework.amqp.core.MessageListener;
 public class H1_Service implements MessageListener{
     private Logger logger = LoggerFactory.getLogger(H1_Service.class);
     public void onMessage(Message message) {
+//        非常简单，实现一个 onMessage接口
         logger.info("Get message: "+new String( message.getBody()));
     }
 }

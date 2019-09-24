@@ -17,7 +17,10 @@ public class WillMakeDlxConsumer {
     public static void main(String[] argv)
             throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
         // 打开连接和创建频道，与发送端一样
         Connection connection = factory.newConnection();
@@ -28,8 +31,10 @@ public class WillMakeDlxConsumer {
         /*声明一个队列，并绑定死信交换器*/
         String queueName = "dlx_make";
         Map<String,Object> args = new HashMap<String,Object>();
+//        写死的一个参数！！-dlx_accept
         args.put("x-dead-letter-exchange",
                 DlxProcessConsumer.DLX_EXCHANGE_NAME);
+//        绑定死信交换器-参数值
         channel.queueDeclare(queueName,false,true,
                 false,
                 args);
@@ -40,7 +45,7 @@ public class WillMakeDlxConsumer {
 
         System.out.println("waiting for message........");
 
-        /*声明了一个消费者*/
+        /*声明了一个消费者（拒绝消费，信息投入到死信队列）*/
         final Consumer consumer = new DefaultConsumer(channel){
             @Override
             public void handleDelivery(String consumerTag,

@@ -92,11 +92,7 @@ button{
 <body>
 	<h1>Hello RabbitMQ</h1>
 	<div id="producer">
-		<h2>Producer</h2>
-		<textarea id="message"></textarea>
-		<br>
-		<button onclick="send('fanoutSender')">发送Fanout消息</button>
-		<button onclick="send('topicSender')">发送Topic消息</button>
+		<h2>Consumer</h2>
 		<br>
 		<span id="status"></span>
 	</div>
