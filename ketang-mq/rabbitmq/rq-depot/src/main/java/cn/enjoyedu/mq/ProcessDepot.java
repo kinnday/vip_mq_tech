@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
  *往期视频咨询芊芊老师  QQ：2130753077  VIP课程咨询 依娜老师  QQ：2470523467
  *类说明：
  */
+//fxc-手动应答时实现-ChannelAwareMessageListener 接口，onMessage方法多一个参数：channel
 @Service
 public class ProcessDepot implements ChannelAwareMessageListener {
 
@@ -33,11 +34,13 @@ public class ProcessDepot implements ChannelAwareMessageListener {
             GoodTransferVo goodTransferVo = gson.fromJson(msg,GoodTransferVo.class);
             try {
                 depotManager.operDepot(goodTransferVo);
+//              手动应答-返回 Ack
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(),
                         false);
                 logger.info(">>>>>>>>>>>>>>库存处理完成，应答Mq服务");
             } catch (Exception e) {
                 logger.error(e.getMessage());
+//              手动应答-返回异常 Nack
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(),
                         false,true);
                 logger.info(">>>>>>>>>>>>>>库存处理失败，拒绝消息，要求Mq重新派发");

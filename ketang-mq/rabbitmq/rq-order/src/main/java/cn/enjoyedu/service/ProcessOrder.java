@@ -17,6 +17,7 @@ public class ProcessOrder {
 
     @Autowired
     @Qualifier("mq")
+//    @Qualifier("rpc")
     private IProDepot proDepot;
 
     public void processOrder(String goodsId,int amount){

@@ -27,9 +27,9 @@
 	<!-- rabbitMQ配置 -->
 	<bean id="rabbitConnectionFactory"
 		  class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
-		<constructor-arg value="127.0.0.1"/>
-		<property name="username" value="guest"/>
-		<property name="password" value="guest"/>
+		<constructor-arg value="10.45.4.97"/>
+		<property name="username" value="admin"/>
+		<property name="password" value="123456"/>
 		<property name="channelCacheSize" value="8"/>
 		<property name="port" value="5672"></property>
 	</bean>
@@ -45,6 +45,7 @@
 	</rabbit:direct-exchange>
 
 	<!-- 对消息要手动确认 -->
+	<!--3.消息消费-手动应答！！-->
     <rabbit:listener-container connection-factory="rabbitConnectionFactory"
 	acknowledge="manual">
         <rabbit:listener queues="depot_queue" ref="processDepot"

@@ -27,9 +27,9 @@
 	<!-- rabbitMQ配置 -->
 	<bean id="rabbitConnectionFactory"
 		  class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
-		<constructor-arg value="127.0.0.1"/>
-		<property name="username" value="guest"/>
-		<property name="password" value="guest"/>
+		<constructor-arg value="10.45.4.97"/>
+		<property name="username" value="admin"/>
+		<property name="password" value="123456"/>
 		<property name="channelCacheSize" value="8"/>
 		<property name="port" value="5672"></property>
 		<!-- 发布确认必须配置在CachingConnectionFactory上 -->
@@ -38,8 +38,10 @@
 	</bean>
 	<rabbit:admin connection-factory="rabbitConnectionFactory"/>
 
+	<!--2.持久化-队列；durable="true"-->
 	<rabbit:queue name="depot_queue" durable="true"/>
 
+	<!--2.持久化-交换器；durable="true"-->
 	<rabbit:direct-exchange name="depot-amount-exchange"
           xmlns="http://www.springframework.org/schema/rabbit"
                             durable="true">
@@ -48,6 +50,7 @@
 		</rabbit:bindings>
 	</rabbit:direct-exchange>
 
+	<!--发送方确认，失败通知；mandatory="true"-->
 	<rabbit:template id="rabbitTemplate"
 					 connection-factory="rabbitConnectionFactory"
     mandatory="true"

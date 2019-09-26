@@ -33,6 +33,8 @@ public class MqMode  implements IProDepot {
         goodTransferVo.setChangeAmount(amount);
         goodTransferVo.setInOrOut(false);
         String goods = gson.toJson(goodTransferVo);
+
+//	<!--2.持久化-消息；essageDeliveryMode.PERSISTENT， 单独设置消息的属性-->
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
         rabbitTemplate.send(DEPOT_EXCHANGE, DEPOT_RK,

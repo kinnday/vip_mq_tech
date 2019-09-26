@@ -15,8 +15,14 @@
         <module>native</module>
         <module>rq-spring-with</module>
         <module>rq-spring-with-consumer</module>
+        <!-- 实战：订单系统-->
         <module>rq-order</module>
+        <!-- 实战：库存系统-->
         <module>rq-depot</module>
+        <!-- 1.发送方确认，失败通知；
+            2. 消息持久化（路由器、队列、消息）
+            3. 确保消费者一定消费了： 手动确认-->
+        <module>rq-springboot-with</module>
     </modules>
 
     <dependencies>

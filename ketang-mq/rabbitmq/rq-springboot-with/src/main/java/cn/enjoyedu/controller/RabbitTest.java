@@ -1,6 +1,6 @@
 package cn.enjoyedu.controller;
 
-import cn.enjoyedu.exchange.fanout.FanoutSender;
+import cn.enjoyedu.fanout.FanoutSender;
 import cn.enjoyedu.hello.DefaultSender;
 import cn.enjoyedu.topic.TopicSender;
 import org.springframework.beans.factory.annotation.Autowired;

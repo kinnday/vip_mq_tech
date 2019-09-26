@@ -18,6 +18,7 @@ public class DepotServiceImpl implements DepotService {
 
     @Override
     public void changeDepot(GoodTransferVo goodTransferVo) {
+
         depotManager.operDepot(goodTransferVo);
     }
 }

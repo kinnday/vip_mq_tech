@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
  *类说明：
  */
 @Component
+// 这里不配置监听，配置在 Configuration里面
 public class UserReceiver implements ChannelAwareMessageListener {
 
 //    @RabbitHandler
@@ -18,6 +19,7 @@ public class UserReceiver implements ChannelAwareMessageListener {
 //        System.out.println("Receiver2  : " + hello);
 //    }
 
+//    fxc-手动应答
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {
         try {
@@ -27,6 +29,7 @@ public class UserReceiver implements ChannelAwareMessageListener {
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(),
                         false);
                 System.out.println("UserReceiver>>>>>>消息已消费");
+                throw new RuntimeException("fxc-error");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(),

@@ -141,6 +141,7 @@ public class RabbitConfig {
                 = new SimpleMessageListenerContainer(connectionFactory());
         container.setQueues(userQueue());
         container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+//  userReceiver，配置在 Configuration里面;手动应答
         container.setMessageListener(userReceiver);
         return container;
     }

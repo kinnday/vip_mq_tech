@@ -28,7 +28,7 @@ public class DepotRpcServer implements ApplicationContextAware {
 
     private static Logger logger
             = LoggerFactory.getLogger(DepotRpcServer.class);
-    private static final int PORT = 10002;
+    private static final int PORT = 10012;
 
     private ApplicationContext appContext;
 
