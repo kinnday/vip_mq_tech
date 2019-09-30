@@ -10,12 +10,15 @@ import java.util.concurrent.TimeoutException;
  *往期视频咨询芊芊老师  QQ：2130753077  VIP课程咨询 依娜老师  QQ：2470523467
  *类说明：一个队列多个消费者，则会表现出消息在消费者之间的轮询发送。
  */
+//fxc- 多个消费者-对应一个队列
+// 三个消费者 轮询消费！！！！
 public class MulitConsumerOneQueue {
 
     private static class ConsumerWorker implements Runnable{
         final Connection connection;
         final String queueName;
 
+//        两个入参： 连接和同一个队列名称！！！
         public ConsumerWorker(Connection connection,String queueName) {
             this.connection = connection;
             this.queueName = queueName;
@@ -70,7 +73,10 @@ public class MulitConsumerOneQueue {
     public static void main(String[] argv) throws IOException,
             InterruptedException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
         // 打开连接和创建频道，与发送端一样
         Connection connection = factory.newConnection();

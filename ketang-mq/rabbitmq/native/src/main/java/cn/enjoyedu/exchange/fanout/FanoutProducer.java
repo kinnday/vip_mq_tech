@@ -13,6 +13,7 @@ import java.util.concurrent.TimeoutException;
  *往期视频咨询芊芊老师  QQ：2130753077  VIP课程咨询 依娜老师  QQ：2470523467
  *类说明：
  */
+// fanout是广播交换器，与路由建没有关系， 绑定了路由建就可以收到消息！！！
 public class FanoutProducer {
 
     public final static String EXCHANGE_NAME = "fanout_logs";
@@ -23,7 +24,10 @@ public class FanoutProducer {
          */
         ConnectionFactory factory = new ConnectionFactory();
         // 设置MabbitMQ所在主机ip或者主机名
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
         // 创建一个连接
         Connection connection = factory.newConnection();
@@ -31,6 +35,7 @@ public class FanoutProducer {
         // 创建一个信道
         Channel channel = connection.createChannel();
         // 指定转发
+//        fxc-!!!! 改变路由器的类型为 fanout
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.FANOUT);
 
         String queueName = "producer_create";

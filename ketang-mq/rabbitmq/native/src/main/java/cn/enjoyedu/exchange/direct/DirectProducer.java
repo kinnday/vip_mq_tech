@@ -19,15 +19,20 @@ public class DirectProducer {
     public static void main(String[] args)
             throws IOException, TimeoutException {
         /* 创建连接,连接到RabbitMQ*/
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("127.0.0.1");
-        Connection connection = connectionFactory.newConnection();
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
+        Connection connection = factory.newConnection();
 
         /*创建信道*/
         Channel channel = connection.createChannel();
         /*创建交换器*/
         channel.exchangeDeclare(EXCHANGE_NAME,"direct");
         //channel.exchangeDeclare(EXCHANGE_NAME,BuiltinExchangeType.DIRECT);
+
+//        fxc-声明队列，（放在消费者中做）
 
         /*日志消息级别，作为路由键使用*/
         String[] serverities = {"error","info","warning"};
@@ -37,7 +42,7 @@ public class DirectProducer {
             /*发布消息，需要参数：交换器，路由键，其中以日志消息级别为路由键*/
             channel.basicPublish(EXCHANGE_NAME,severity,null,
                     msg.getBytes());
-            System.out.println("Sent "+severity+":"+msg);
+            System.out.println("-------Sent route-key:"+severity+"; msg:"+msg);
         }
         channel.close();
         connection.close();

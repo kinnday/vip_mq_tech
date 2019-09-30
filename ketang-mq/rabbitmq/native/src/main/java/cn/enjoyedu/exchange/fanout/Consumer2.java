@@ -14,7 +14,10 @@ public class Consumer2 {
 
     public static void main(String[] argv) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
 
         // 打开连接和创建频道，与发送端一样
@@ -27,8 +30,8 @@ public class Consumer2 {
         String queueName = channel.queueDeclare().getQueue();
 
         //只关注error级别的日志，然后记录到文件中去
-        //只关注error级别的日志，然后记录到文件中去。
-        String severity="test";
+        //fxc-设置不存在的路由建，也可以正常收到消息
+        String severity="testxxxx";
         channel.queueBind(queueName, FanoutProducer.EXCHANGE_NAME,
                 severity);
 

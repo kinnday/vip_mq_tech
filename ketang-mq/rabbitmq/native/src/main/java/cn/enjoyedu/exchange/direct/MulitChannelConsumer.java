@@ -10,6 +10,8 @@ import java.util.concurrent.TimeoutException;
  *往期视频咨询芊芊老师  QQ：2130753077  VIP课程咨询 依娜老师  QQ：2470523467
  *类说明：一个连接多个信道
  */
+// fxc-一个连接多个信道
+// 重复消费，每个信道一个消费者，每个消费者独立消费
 public class MulitChannelConsumer {
 
     private static class ConsumerWorker implements Runnable{
@@ -66,12 +68,15 @@ public class MulitChannelConsumer {
     public static void main(String[] argv) throws IOException,
             InterruptedException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
         // 打开连接和创建频道，与发送端一样
         Connection connection = factory.newConnection();
         //一个连接多个信道
-        for(int i=0;i<2;i++){
+        for(int i=0;i<3;i++){
             /*将连接作为参数，传递给每个线程*/
             Thread worker =new Thread(new ConsumerWorker(connection));
             worker.start();

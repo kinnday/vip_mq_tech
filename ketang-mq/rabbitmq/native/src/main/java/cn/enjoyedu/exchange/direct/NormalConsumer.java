@@ -14,33 +14,53 @@ public class NormalConsumer {
 
     public static void main(String[] argv)
             throws IOException, TimeoutException {
+//      创建连接工厂
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("127.0.0.1");
+        factory.setHost("10.45.4.97");
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("123456");
 
         // 打开连接和创建频道，与发送端一样
         Connection connection = factory.newConnection();
+//        创建信道  connection.createChannel();
         final Channel channel = connection.createChannel();
-        channel.exchangeDeclare(DirectProducer.EXCHANGE_NAME,
-                "direct");
+//        在信道中设置交换器
+        channel.exchangeDeclare(DirectProducer.EXCHANGE_NAME,BuiltinExchangeType.DIRECT);
+//        channel.exchangeDeclare(DirectProducer.EXCHANGE_NAME,    "direct");
 
-        /*声明一个队列*/
+//        /*声明一个队列*/   [消费者端实现]
         String queueName = "focuserror";
         channel.queueDeclare(queueName,false,false,
                 false,null);
 
-        /*绑定，将队列和交换器通过路由键进行绑定*/
+//        /*绑定，将队列和交换器通过路由键进行绑定*/  [消费者端实现]
+//        String[] serverities = {"error","info","warning"};
         String routekey = "info";/*表示只关注error级别的日志消息*/
+//        channel.queueBind(queueName,DirectProducer.EXCHANGE_NAME,routekey);
         channel.queueBind(queueName,DirectProducer.EXCHANGE_NAME,routekey);
 
         System.out.println("waiting for message........");
 
         /*声明了一个消费者*/
-        final Consumer consumer = new DefaultConsumer(channel){
+//        final Consumer consumer = new DefaultConsumer(channel){
+//            @Override
+//            public void handleDelivery(String consumerTag,
+//                                       Envelope envelope,
+//                                       AMQP.BasicProperties properties,
+//                                       byte[] body) throws IOException {
+//                String message = new String(body, "UTF-8");
+//                System.out.println("Received["+envelope.getRoutingKey()
+//                        +"]"+message);
+//            }
+//        };
+
+//        fxc-声明一个消费者
+        final Consumer consumer= new DefaultConsumer(channel){
             @Override
-            public void handleDelivery(String consumerTag,
-                                       Envelope envelope,
-                                       AMQP.BasicProperties properties,
-                                       byte[] body) throws IOException {
+            public void handleDelivery(String consumerTag, Envelope envelope,
+                                       AMQP.BasicProperties properties, byte[] body) throws IOException {
+//                super.handleDelivery(consumerTag, envelope, properties, body);
                 String message = new String(body, "UTF-8");
                 System.out.println("Received["+envelope.getRoutingKey()
                         +"]"+message);
